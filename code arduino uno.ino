@@ -57,7 +57,7 @@ if(distance<=400 && distance>50){
 	digitalWrite(in3, HIGH);
 	digitalWrite(in4, LOW);
 }
-if(distance<=150 && distance<50){
+if(distance<=150 && distance<150){
 	// slow car
   analogWrite(enA,125);
   analogWrite(enB,125);
