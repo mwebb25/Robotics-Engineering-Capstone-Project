@@ -48,7 +48,7 @@ void loop() {
 }
 // This function lets you control spinning direction of motors
 void directionControl() {
-if(distance<=400 && distance>50){
+if(distance<=400 && distance>150){
 	// basic move forward
   analogWrite(enA, 255);
 	analogWrite(enB, 255);
