@@ -4,10 +4,10 @@
 #define BLYNK_FIRMWARE_VERSION        "0.1.0"
 #include <ESP8266WiFi.h>
 #define BLYNK_PRINT Serial
-const char* ssid = "iPhone";
-const char* password = "Food is good for all people.";
 #define APP_DEBUG
 #include "BlynkEdgent.h"
+const char* ssid="iPhone";
+const char* password="Food is good for all people.";
 // Motor A connections
 int enA = 16;
 int in1 = 5;
@@ -45,8 +45,9 @@ void loop() {
   BlynkEdgent.run();
   directionControl();
   digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(0.000000001);
+  delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
@@ -114,25 +115,13 @@ BLYNK_WRITE(V0){
   }
 }
 void directionControl(){
-  if(distance<=400 && distance>30){
+  if(distance>30){
   Blynk.syncVirtual(V0);
   Blynk.syncVirtual(V1);
   Blynk.syncVirtual(V2);
   Blynk.syncVirtual(V3);
 }
  else{
-  Blynk.syncVirtual(V0); 
-  Blynk.syncVirtual(V1);
-  Blynk.syncVirtual(V2);
-  Blynk.syncVirtual(V3);
- }
- if(distance<30){
   Blynk.syncVirtual(V0);
- }
- else{
-  Blynk.syncVirtual(V0);
-  Blynk.syncVirtual(V1);
-  Blynk.syncVirtual(V2);
-  Blynk.syncVirtual(V3);
- }
+}
 }
