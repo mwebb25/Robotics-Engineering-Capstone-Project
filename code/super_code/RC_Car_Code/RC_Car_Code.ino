@@ -22,6 +22,7 @@ int echoPin = 13;
 //variable conection
 long duration;
 int distance;
+WidgetLCD lcd(V4);
 void setup()
 {
   // Set all the motor control pins to outputs
@@ -39,67 +40,77 @@ void setup()
 	digitalWrite(in2, LOW);
 	digitalWrite(in3, LOW);
 	digitalWrite(in4, LOW);
+  //starts phone connection
   BlynkEdgent.begin();
 }
 void loop() {
+  //loops the connection between phone and esp8266
   BlynkEdgent.run();
-  directionControl();
+  //allows for the distnace sensor to read distance
   digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
+  //prints in cm on phone
   distance = duration * 0.034 / 2;
+  lcd.print(0,0,distance);
+  lcd.clear();
 }
+BLYNK_READ(V4){
+    Blynk.virtualWrite(V4, distance);
+}
+//foward
 BLYNK_WRITE(V1){
-  if(param.asInt()==1){
-    digitalWrite(enA, 255);
-    digitalWrite(enB,255);
-	  digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, HIGH);
-	  digitalWrite(in4, LOW);
-    }
-  else{
-	  digitalWrite(in1, LOW);
-	  digitalWrite(in2, LOW);
-	  digitalWrite(in3, LOW);
-	  digitalWrite(in4, LOW);
-    }
-}  
-BLYNK_WRITE(V2){
-  if(param.asInt()==1){
-    digitalWrite(enA,125);
-    digitalWrite(enB,255);
-    digitalWrite(in1,LOW);
-    digitalWrite(in2,HIGH);
-    digitalWrite(in3,HIGH);
-    digitalWrite(in4,LOW);
-    }
-  else{
-    digitalWrite(in1, LOW);
-	  digitalWrite(in2, LOW);
-	  digitalWrite(in3, LOW);
-	  digitalWrite(in4, LOW);
-    }
-  }
-BLYNK_WRITE(V3){
-  if(param.asInt()==1){
-    digitalWrite(enA,255);
-    digitalWrite(enB,125);
-    digitalWrite(in1,HIGH);
-    digitalWrite(in2,LOW);
-    digitalWrite(in3,LOW);
-    digitalWrite(in4,HIGH);
-  }
+    if(param.asInt()==1 && distance>30){
+      digitalWrite(enA, 255);
+      digitalWrite(enB,255);
+	    digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      digitalWrite(in3, HIGH);
+	    digitalWrite(in4, LOW);
+      }
     else{
-    digitalWrite(in1, LOW);
-	  digitalWrite(in2, LOW);
-	  digitalWrite(in3, LOW);
-	  digitalWrite(in4, LOW);
+      digitalWrite(in1, LOW);
+	    digitalWrite(in2, LOW);
+	    digitalWrite(in3, LOW);
+	    digitalWrite(in4, LOW);  
+      }
+}
+//right
+BLYNK_WRITE(V2){
+    if(param.asInt()==1){
+      digitalWrite(enA,125);
+      digitalWrite(enB,255);
+      digitalWrite(in1,LOW);
+      digitalWrite(in2,HIGH);
+      digitalWrite(in3,HIGH);
+      digitalWrite(in4,LOW);
+    }
+    else{
+      digitalWrite(in1, LOW);
+	    digitalWrite(in2, LOW);
+	    digitalWrite(in3, LOW);
+	    digitalWrite(in4, LOW);
+    } 
+  }
+//left
+BLYNK_WRITE(V3){
+    if(param.asInt()==1 ){
+      digitalWrite(enA,255);
+      digitalWrite(enB,125);
+      digitalWrite(in1,HIGH);
+      digitalWrite(in2,LOW);
+      digitalWrite(in3,LOW);
+      digitalWrite(in4,HIGH);
+    }
+    else{
+      digitalWrite(in1, LOW);
+	    digitalWrite(in2, LOW);
+	    digitalWrite(in3, LOW);
+	    digitalWrite(in4, LOW);
     }
   }
+//back
 BLYNK_WRITE(V0){
   if(param.asInt()==1){
     digitalWrite(in1, LOW);
@@ -114,14 +125,17 @@ BLYNK_WRITE(V0){
 	  digitalWrite(in4, LOW);
   }
 }
-void directionControl(){
+//syncs all above to phone
+BLYNK_CONNECTED(){
   if(distance>30){
   Blynk.syncVirtual(V0);
   Blynk.syncVirtual(V1);
   Blynk.syncVirtual(V2);
   Blynk.syncVirtual(V3);
-}
- else{
-  Blynk.syncVirtual(V0);
-}
+  }
+  else{
+    Blynk.syncVirtual(V0);
+    Blynk.syncVirtual(V2);
+    Blynk.syncVirtual(V3);
+  }
 }
