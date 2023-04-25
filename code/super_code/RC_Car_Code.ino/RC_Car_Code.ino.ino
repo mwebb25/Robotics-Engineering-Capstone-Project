@@ -22,6 +22,7 @@ int echoPin = 13;
 //variable conection
 long duration;
 int distance;
+//lcd
 WidgetLCD lcd(V4);
 void setup()
 {
@@ -139,3 +140,4 @@ BLYNK_CONNECTED(){
     Blynk.syncVirtual(V3);
   }
 }
+
