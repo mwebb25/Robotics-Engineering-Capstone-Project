@@ -54,6 +54,7 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   //prints in cm on phone
   distance = duration * 0.034 / 2;
+  //lcd print
   lcd.print(0,0,distance);
   lcd.clear();
 }
