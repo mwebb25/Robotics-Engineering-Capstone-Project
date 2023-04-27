@@ -22,7 +22,6 @@ int echoPin = 13;
 //variable conection
 long duration;
 int distance;
-//lcd
 WidgetLCD lcd(V4);
 void setup()
 {
@@ -54,7 +53,6 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   //prints in cm on phone
   distance = duration * 0.034 / 2;
-  //lcd print
   lcd.print(0,0,distance);
   lcd.clear();
 }
@@ -70,13 +68,27 @@ BLYNK_WRITE(V1){
       digitalWrite(in2, LOW);
       digitalWrite(in3, HIGH);
 	    digitalWrite(in4, LOW);
+      //get distance
+      digitalWrite(trigPin, LOW);
+      digitalWrite(trigPin, HIGH);
+      digitalWrite(trigPin, LOW);
+      duration = pulseIn(echoPin, HIGH);
+      //prints in cm on phone
+      distance = duration * 0.034 / 2;
+      Serial.println("here");
       }
-    else{
+    if (param.asInt() == 0){
       digitalWrite(in1, LOW);
 	    digitalWrite(in2, LOW);
 	    digitalWrite(in3, LOW);
-	    digitalWrite(in4, LOW);  
-      }
+	    digitalWrite(in4, LOW); 
+    }
+    if(distance<30){
+      digitalWrite(in1, LOW);
+	    digitalWrite(in2, LOW);
+	    digitalWrite(in3, LOW);
+	    digitalWrite(in4, LOW);
+    }    
 }
 //right
 BLYNK_WRITE(V2){
