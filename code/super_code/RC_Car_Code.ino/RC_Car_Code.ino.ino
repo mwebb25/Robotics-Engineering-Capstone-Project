@@ -60,36 +60,22 @@ BLYNK_READ(V4){
     Blynk.virtualWrite(V4, distance);
 }
 //foward
-BLYNK_WRITE(V1){
-    if(param.asInt()==1 && distance>30){
-      digitalWrite(enA, 255);
-      digitalWrite(enB,255);
-	    digitalWrite(in1, HIGH);
-      digitalWrite(in2, LOW);
-      digitalWrite(in3, HIGH);
-	    digitalWrite(in4, LOW);
-      //get distance
-      digitalWrite(trigPin, LOW);
-      digitalWrite(trigPin, HIGH);
-      digitalWrite(trigPin, LOW);
-      duration = pulseIn(echoPin, HIGH);
-      //prints in cm on phone
-      distance = duration * 0.034 / 2;
-      Serial.println("here");
+    BLYNK_WRITE(V1){
+      if(param.asInt()==1 && distance>30){
+        digitalWrite(enA, 255);
+        digitalWrite(enB,255);
+	      digitalWrite(in1, HIGH);
+        digitalWrite(in2, LOW);
+        digitalWrite(in3, HIGH);
+	      digitalWrite(in4, LOW);
       }
-    if (param.asInt() == 0){
-      digitalWrite(in1, LOW);
-	    digitalWrite(in2, LOW);
-	    digitalWrite(in3, LOW);
-	    digitalWrite(in4, LOW); 
+      else{
+	      digitalWrite(in1, LOW);
+        digitalWrite(in2, LOW);
+        digitalWrite(in3, LOW);
+	      digitalWrite(in4, LOW); 
+      }
     }
-    if(distance<30){
-      digitalWrite(in1, LOW);
-	    digitalWrite(in2, LOW);
-	    digitalWrite(in3, LOW);
-	    digitalWrite(in4, LOW);
-    }    
-}
 //right
 BLYNK_WRITE(V2){
     if(param.asInt()==1){
@@ -110,14 +96,18 @@ BLYNK_WRITE(V2){
 //left
 BLYNK_WRITE(V3){
     if(param.asInt()==1 ){
+      //a/b speed controle
       digitalWrite(enA,255);
       digitalWrite(enB,125);
+      //motor a singnal
       digitalWrite(in1,HIGH);
       digitalWrite(in2,LOW);
+      //motor b signal
       digitalWrite(in3,LOW);
       digitalWrite(in4,HIGH);
     }
     else{
+      //motor a stop
       digitalWrite(in1, LOW);
 	    digitalWrite(in2, LOW);
 	    digitalWrite(in3, LOW);
@@ -141,16 +131,9 @@ BLYNK_WRITE(V0){
 }
 //syncs all above to phone
 BLYNK_CONNECTED(){
-  if(distance>30){
   Blynk.syncVirtual(V0);
   Blynk.syncVirtual(V1);
   Blynk.syncVirtual(V2);
   Blynk.syncVirtual(V3);
   }
-  else{
-    Blynk.syncVirtual(V0);
-    Blynk.syncVirtual(V2);
-    Blynk.syncVirtual(V3);
-  }
-}
 
