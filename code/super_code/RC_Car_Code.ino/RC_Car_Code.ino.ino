@@ -62,7 +62,7 @@ BLYNK_READ(V4){
 }
 //foward
 BLYNK_WRITE(V1){
-  if(param.asInt()==1 && distance>30){
+  if(param.asInt()==1){
     void directionControl(){
       if(distance>30){
         digitalWrite(enA, 255);
