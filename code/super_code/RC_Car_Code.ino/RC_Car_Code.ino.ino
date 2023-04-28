@@ -1,3 +1,4 @@
+//varibles and connection
 #define BLYNK_TEMPLATE_ID "TMPLSS2DuLTW"
 #define BLYNK_TEMPLATE_NAME "project"
 #define BLYNK_AUTH_TOKEN "a55nPenSVwgQyXT0dCVGiNrOxt9rMoVe"
@@ -6,6 +7,7 @@
 #define BLYNK_PRINT Serial
 #define APP_DEBUG
 #include "BlynkEdgent.h"
+//wifi connection
 const char* ssid="iPhone";
 const char* password="Food is good for all people.";
 // Motor A connections
@@ -22,6 +24,7 @@ int echoPin = 13;
 //variable conection
 long duration;
 int distance;
+//lcd conection
 WidgetLCD lcd(V4);
 void setup()
 {
@@ -51,11 +54,13 @@ void loop() {
   digitalWrite(trigPin, HIGH);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
-  //prints in cm on phone
+  //print distance in cm
   distance = duration * 0.034 / 2;
+  //prints on phone
   lcd.print(0,0,distance);
   lcd.clear();
 }
+//allows to use lcd on phone
 BLYNK_READ(V4){
     Blynk.virtualWrite(V4, distance);
 }
@@ -63,16 +68,21 @@ BLYNK_READ(V4){
 BLYNK_WRITE(V1){
   while(param.asInt()==1){
     if(distance>30){
+      //speed
       digitalWrite(enA, 255);
       digitalWrite(enB,255);
+      //motor a
 	    digitalWrite(in1, HIGH);
       digitalWrite(in2, LOW);
+      //motor b
       digitalWrite(in3, HIGH);
 	    digitalWrite(in4, LOW);
       }
     else{
+      //motor a
 	    digitalWrite(in1, LOW);
       digitalWrite(in2, LOW);
+      //motor b
       digitalWrite(in3, LOW);
 	    digitalWrite(in4, LOW); 
       }
@@ -81,16 +91,21 @@ BLYNK_WRITE(V1){
 //right
 BLYNK_WRITE(V2){
     if(param.asInt()==1){
+      //speed
       digitalWrite(enA,125);
       digitalWrite(enB,255);
+      //motor a
       digitalWrite(in1,LOW);
       digitalWrite(in2,HIGH);
+      //motor b
       digitalWrite(in3,HIGH);
       digitalWrite(in4,LOW);
     }
     else{
+      //motor a
       digitalWrite(in1, LOW);
 	    digitalWrite(in2, LOW);
+      //motor b
 	    digitalWrite(in3, LOW);
 	    digitalWrite(in4, LOW);
     } 
@@ -98,20 +113,21 @@ BLYNK_WRITE(V2){
 //left
 BLYNK_WRITE(V3){
     if(param.asInt()==1 ){
-      //a/b speed controle
+      //speed
       digitalWrite(enA,255);
       digitalWrite(enB,125);
-      //motor a singnal
+      //motor a 
       digitalWrite(in1,HIGH);
       digitalWrite(in2,LOW);
-      //motor b signal
+      //motor b 
       digitalWrite(in3,LOW);
       digitalWrite(in4,HIGH);
     }
     else{
-      //motor a stop
+      //motor a 
       digitalWrite(in1, LOW);
 	    digitalWrite(in2, LOW);
+      //motor b
 	    digitalWrite(in3, LOW);
 	    digitalWrite(in4, LOW);
     }
@@ -119,23 +135,31 @@ BLYNK_WRITE(V3){
 //back
 BLYNK_WRITE(V0){
   if(param.asInt()==1){
+    //motor a
     digitalWrite(in1, LOW);
 	  digitalWrite(in2, HIGH);
+    //motor b
 	  digitalWrite(in3, LOW);
 	  digitalWrite(in4, HIGH);
   }
   else{
+    //motor a
     digitalWrite(in1, LOW);
 	  digitalWrite(in2, LOW);
+    //motor b
 	  digitalWrite(in3, LOW);
 	  digitalWrite(in4, LOW);
   }
 }
 //syncs all above to phone
 BLYNK_CONNECTED(){
+  //back
   Blynk.syncVirtual(V0);
+  //forward
   Blynk.syncVirtual(V1);
+  //right
   Blynk.syncVirtual(V2);
+  //left
   Blynk.syncVirtual(V3);
   }
 
