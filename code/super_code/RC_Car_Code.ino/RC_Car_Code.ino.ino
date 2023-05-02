@@ -47,6 +47,7 @@ void setup()
   BlynkEdgent.begin();
 }
 void loop() {
+  directionCotrol();
   //loops the connection between phone and esp8266
   BlynkEdgent.run();
   //allows for the distnace sensor to read distance
@@ -66,28 +67,26 @@ BLYNK_READ(V4){
 }
 //foward
 BLYNK_WRITE(V1){
-  while(param.asInt()==1){
-    if(distance>30){
-      //speed
-      digitalWrite(enA, 255);
-      digitalWrite(enB,255);
-      //motor a
-	    digitalWrite(in1, HIGH);
-      digitalWrite(in2, LOW);
-      //motor b
-      digitalWrite(in3, HIGH);
-	    digitalWrite(in4, LOW);
-      }
-    else{
-      //motor a
-	    digitalWrite(in1, LOW);
-      digitalWrite(in2, LOW);
-      //motor b
-      digitalWrite(in3, LOW);
-	    digitalWrite(in4, LOW); 
-      }
+  if(param.asInt()==1){
+    //speed
+    digitalWrite(enA, 255);
+    digitalWrite(enB,255);
+    //motor a
+	  digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    //motor b
+    digitalWrite(in3, HIGH);
+	  digitalWrite(in4, LOW);
+    }
+  else{
+    //motor a
+	  digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    //motor b
+    digitalWrite(in3, LOW);
+	  digitalWrite(in4, LOW); 
     } 
-  }
+}
 //right
 BLYNK_WRITE(V2){
     if(param.asInt()==1){
@@ -155,11 +154,14 @@ BLYNK_WRITE(V0){
 BLYNK_CONNECTED(){
   //back
   Blynk.syncVirtual(V0);
-  //forward
-  Blynk.syncVirtual(V1);
   //right
   Blynk.syncVirtual(V2);
   //left
   Blynk.syncVirtual(V3);
   }
+void directionCotrol(){
+  if(distance>45){
+    Blynk.syncVirtual(V1);
+  }
+}
 
