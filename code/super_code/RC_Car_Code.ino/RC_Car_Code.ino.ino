@@ -152,16 +152,20 @@ BLYNK_CONNECTED(){
   }
 void directionCotrol(){
   if(distance>50){
-  //allows for the distnace sensor to read distance
-  digitalWrite(trigPin, LOW);
-  digitalWrite(trigPin, HIGH);
-  digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH);
-  //print distance in cm
-  distance = duration * 0.034 / 2;
-  //prints on phone
-  lcd.print(0,0,distance);
-  lcd.clear();
+    //allows for the distnace sensor to read distance
+    digitalWrite(trigPin, LOW);
+    digitalWrite(trigPin, HIGH);
+    digitalWrite(trigPin, LOW);
+    duration = pulseIn(echoPin, HIGH);
+    //print distance in cm
+    distance = duration * 0.034 / 2;
+    //prints on phone
+    lcd.print(0,0,distance);
+    lcd.clear();
+  }
+  else{
+    lcd.print(0,0,"You have hit a wall!!");
+    lcd.clear();
   }
 }
 
