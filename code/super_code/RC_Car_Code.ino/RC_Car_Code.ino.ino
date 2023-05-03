@@ -47,7 +47,7 @@ void setup()
   BlynkEdgent.begin();
 }
 void loop() {
-  //defins a command
+  //defins a new function
   directionCotrol();
   //loops the connection between phone and esp8266
   BlynkEdgent.run();
@@ -165,6 +165,7 @@ void directionCotrol(){
   }
   else{
     lcd.print(0,0,"You have hit a wall!!");
+    delay(5);
     lcd.clear();
   }
 }
