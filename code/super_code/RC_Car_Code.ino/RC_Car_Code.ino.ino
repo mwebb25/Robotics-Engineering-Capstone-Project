@@ -50,16 +50,15 @@ void loop() {
   //defins a new function
   directionCotrol();
   //loops the connection between phone and esp8266
-    //allows for the distnace sensor to read distance
+  BlynkEdgent.run();
+  //reads trigpin to get distance
   digitalWrite(trigPin, LOW);
   digitalWrite(trigPin, HIGH);
   digitalWrite(trigPin, LOW);
+  //get durration
   duration = pulseIn(echoPin, HIGH);
   //print distance in cm
   distance = duration * 0.034 / 2;
-  //prints on phone
-
-  BlynkEdgent.run();
 }
 //allows to use lcd on phone
 BLYNK_READ(V4){
@@ -152,7 +151,6 @@ BLYNK_WRITE(V0){
 }
 //syncs all above to phone
 BLYNK_CONNECTED(){
-  Blynk.syncVirtual(V1);
   //back
   Blynk.syncVirtual(V0);
   //right
@@ -162,20 +160,22 @@ BLYNK_CONNECTED(){
   }
 void directionCotrol(){
   if(distance>50){
-    //allows for the distnace sensor to read distance
+    //reads tripgpin
     digitalWrite(trigPin, LOW);
     digitalWrite(trigPin, HIGH);
     digitalWrite(trigPin, LOW);
+    //calculats duration
     duration = pulseIn(echoPin, HIGH);
     //print distance in cm
     distance = duration * 0.034 / 2;
     //prints on phone
     lcd.print(0,0,distance);
     lcd.clear();
+    //foward
+    Blynk.syncVirtual(V1);
   }
   else{
     lcd.print(0,0,"STOP!!!");
-    delay(5);
     lcd.clear();
   }
 }
