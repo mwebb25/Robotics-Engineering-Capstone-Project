@@ -48,7 +48,7 @@ void setup()
 }
 void loop() {
   //defins a new function
-  directionCotrol();
+  //directionCotrol();
   //loops the connection between phone and esp8266
   BlynkEdgent.run();
   //reads trigpin to get distance
@@ -66,7 +66,7 @@ BLYNK_READ(V4){
 }
 //foward
 BLYNK_WRITE(V1){
-  if(param.asInt()==1 && distance>50){
+  if(param.asInt()==1 && distance>60){
     //speed
     digitalWrite(enA, 255);
     digitalWrite(enB,255);
@@ -110,7 +110,7 @@ BLYNK_WRITE(V2){
   }
 //left
 BLYNK_WRITE(V3){
-    if(param.asInt()==1 ){
+    if(param.asInt()==1){
       //speed
       digitalWrite(enA,255);
       digitalWrite(enB,125);
@@ -150,16 +150,9 @@ BLYNK_WRITE(V0){
   }
 }
 //syncs all above to phone
-BLYNK_CONNECTED(){
-  //back
-  Blynk.syncVirtual(V0);
-  //right
-  Blynk.syncVirtual(V2);
-  //left
-  Blynk.syncVirtual(V3);
-  }
+
 void directionCotrol(){
-  if(distance>50){
+  if(distance>60){
     //reads tripgpin
     digitalWrite(trigPin, LOW);
     digitalWrite(trigPin, HIGH);
@@ -173,10 +166,29 @@ void directionCotrol(){
     lcd.clear();
     //foward
     Blynk.syncVirtual(V1);
-  }
+    //back
+    Blynk.syncVirtual(V0);
+    //right
+    Blynk.syncVirtual(V2);
+    //left
+    Blynk.syncVirtual(V3);
+    }
   else{
     lcd.print(0,0,"STOP!!!");
-    lcd.clear();
+    //back
+    Blynk.syncVirtual(V0);
+    //right
+    Blynk.syncVirtual(V2);
+    //left
+    Blynk.syncVirtual(V3);
+    }
   }
-}
+BLYNK_CONNECTED(){
+  //back
+  Blynk.syncVirtual(V0);
+  //right
+  Blynk.syncVirtual(V2);
+  //left
+  Blynk.syncVirtual(V3);
+  }
 
