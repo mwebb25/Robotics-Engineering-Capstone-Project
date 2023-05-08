@@ -1,7 +1,7 @@
 //varibles and connection
 #define BLYNK_TEMPLATE_ID "TMPLSS2DuLTW"
 #define BLYNK_TEMPLATE_NAME "project"
-#define BLYNK_AUTH_TOKEN "a55nPenSVwgQyXT0dCVGiNrOxt9rMoVe"
+#define BLYNK_AUTH_TOKEN "4_H83UnU1TvqvrywsCV8lCb_X3dhmFyZ"
 #define BLYNK_FIRMWARE_VERSION        "0.1.0"
 #include <ESP8266WiFi.h>
 #define BLYNK_PRINT Serial
@@ -29,6 +29,7 @@ WidgetLCD lcd(V4);
 void setup()
 {
   // Set all the motor control pins to outputs
+  pinMode(2,OUTPUT);
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);
 	pinMode(in1, OUTPUT);
@@ -63,6 +64,14 @@ void loop() {
 //allows to use lcd on phone
 BLYNK_READ(V4){
     Blynk.virtualWrite(V4, distance);
+}
+BLYNK_WRITE(V5){
+  if(param.asInt()==1){
+    digitalWrite(2,HIGH);
+  }
+  else{
+    digitalWrite(2,LOW);
+  }
 }
 //foward
 BLYNK_WRITE(V1){
