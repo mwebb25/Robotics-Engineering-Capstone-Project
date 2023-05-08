@@ -48,7 +48,7 @@ void setup()
 }
 void loop() {
   //defins a new function
-  //directionCotrol();
+  directionCotrol();
   //loops the connection between phone and esp8266
   BlynkEdgent.run();
   //reads trigpin to get distance
@@ -167,22 +167,18 @@ void directionCotrol(){
     //foward
     Blynk.syncVirtual(V1);
     //back
-    Blynk.syncVirtual(V0);
-    //right
-    Blynk.syncVirtual(V2);
-    //left
-    Blynk.syncVirtual(V3);
+
     }
   else{
     lcd.print(0,0,"STOP!!!");
     //back
-    Blynk.syncVirtual(V0);
+    //Blynk.syncVirtual(V0);
     //right
-    Blynk.syncVirtual(V2);
+    //Blynk.syncVirtual(V2);
     //left
-    Blynk.syncVirtual(V3);
-    }
-  }
+    //Blynk.syncVirtual(V3);
+    }  
+}
 BLYNK_CONNECTED(){
   //back
   Blynk.syncVirtual(V0);
