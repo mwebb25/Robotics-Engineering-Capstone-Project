@@ -29,7 +29,6 @@ WidgetLCD lcd(V4);
 void setup()
 {
   // Set all the motor control pins to outputs
-  pinMode(2,OUTPUT);
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);
 	pinMode(in1, OUTPUT);
@@ -53,17 +52,25 @@ void loop() {
   //loops the connection between phone and esp8266
   BlynkEdgent.run();
   //reads trigpin to get distance
+   // Clears the trigPin
   digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  //get durration
+  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPin, HIGH);
-  //print distance in cm
+  // Calculating the distance
   distance = duration * 0.034 / 2;
+  // Prints the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
 }
 //allows to use lcd on phone
 BLYNK_READ(V4){
-    Blynk.virtualWrite(V4, distance);
+  Blynk.virtualWrite(V4,distance);
 }
 BLYNK_WRITE(V5){
   if(param.asInt()==1){
@@ -162,20 +169,22 @@ BLYNK_WRITE(V0){
 
 void directionCotrol(){
   if(distance>60){
-    //reads tripgpin
     digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    // Sets the trigPin on HIGH state for 10 micro seconds
     digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
     digitalWrite(trigPin, LOW);
-    //calculats duration
+    // Reads the echoPin, returns the sound wave travel time in microseconds
     duration = pulseIn(echoPin, HIGH);
-    //print distance in cm
+    // Calculating the distance
     distance = duration * 0.034 / 2;
-    //prints on phone
+    // Prints the distance on the Serial Monitor
+    Serial.print("Distance: ");
+    Serial.println(distance);
     lcd.print(0,0,distance);
     lcd.clear();
-    //foward
     Blynk.syncVirtual(V1);
-    //back
 
     }
   else{
@@ -195,5 +204,7 @@ BLYNK_CONNECTED(){
   Blynk.syncVirtual(V2);
   //left
   Blynk.syncVirtual(V3);
+  Blynk.syncVirtual(V5);
+  Blynk.syncVirtual(V4);
   }
 
