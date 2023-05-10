@@ -14,6 +14,7 @@ We will design our car to be fast and lightweight. We will power it with a 5 vol
 Grady Thorne and Michael Webb
 05/10/2023
 
+![IMG_1059](https://github.com/mwebb25/Robotics-Engineering-Capstone-Project/assets/90726375/2a939505-40dd-4ecc-9f6e-d8c3bd338a80)
 
 Design Summary:
 
