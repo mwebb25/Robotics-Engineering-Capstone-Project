@@ -20,6 +20,7 @@ Grady Thorne and Michael Webb
 Design Summary:
 
 For our project we built a Remote Controlled Car. An ESP8266 controls four Arduino motors that move the car around. A distance sensor mounted on the front of the car senses distance and stops the car from colliding with any obstacles in front of it. When the car gets too close to an object it automatically stops the car. 
+
 ![Screenshot 2023-05-05 9 06 57 AM](https://github.com/mwebb25/Robotics-Engineering-Capstone-Project/assets/90726375/3e7e15bf-cf57-4935-888a-55b759b8ff40)
 ![Screenshot 2023-05-04 9 51 18 AM](https://github.com/mwebb25/Robotics-Engineering-Capstone-Project/assets/90726375/1c64787d-4794-40a2-ae72-166d562c91bf)
 
@@ -31,7 +32,6 @@ For our driving system four motors that move four wheels. We have a phone with B
 Design Evaluation:
 
 For the output display we have a LCD and display screen on the phone we use to display the distance the car is away from an object. For the manual user input we have a touch screen with four buttons that controls the car. For our automatic sensor we use a distance sensor to tell us how far away an object is and will give us a warning message if the car gets too close and will stop the car. We have four on-off DC motors to drive the car that meet the Actuators, Mechanisms and Hardware requirements. We have a bluetooth module that connects Blynk to our ESP to control the entire car. 
-
 
 
 Parts:
