@@ -36,17 +36,17 @@ For the output display we have a LCD and display screen on the phone we use to d
 
 Parts:
 
-ESP8266 #WRL-17146 Sparkfun Electronics $8
-L298n Motor Controller #L298n Qunqi $5
-4 Arduino Motors and Wheels #ROA_408 DiGiYes $15
-Distance Sensor #EP-HC-SR04 EPLZON $3
-2 Battery Packs $8
-9 Batteries #HR-3UTG-AMZN Amazon $9
-Mini BreadBoard #3-01-0633 HiLetgo $7
-Switch $2
-Wire Nuts #30-072 Ideal $2
-Magnets $2
-PVC #42639 Ace $3
+ESP8266 #WRL-17146 Sparkfun Electronics $8,
+L298n Motor Controller #L298n Qunqi $5,
+4 Arduino Motors and Wheels #ROA_408 DiGiYes $15,
+Distance Sensor #EP-HC-SR04 EPLZON $3,
+2 Battery Packs $8,
+9 Batteries #HR-3UTG-AMZN Amazon $9,
+Mini BreadBoard #3-01-0633 HiLetgo $7,
+Switch $2,
+Wire Nuts #30-072 Ideal $2,
+Magnets $2,
+PVC #42639 Ace $3. The total cost of our project is $64.
 
 3D Prints:
 Walls 73.1g
